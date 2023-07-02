@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Procrastination-Blocking Web Proxy API
+  description: API documentation for the Procrastination-Blocking Web Proxy project
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+paths:
+  /admin/block/{domain}:
+    post:
+      summary: Block a domain
+      description: Blocks the specified domain from accessing through the proxy.
+      parameters:
+        - in: path
+          name: domain
+          required: true
+          schema:
+            type: string
+          description: The domain to be blocked.
+
+      responses:
+        '200':
+          description: Domain successfully blocked.
+        '404':
+          description: Domain not found.
+        '500':
+          description: Internal server error.
+
+  /admin/unblock/{domain}:
+    post:
+      summary: Unblock a domain
+      description: Unblocks the specified domain, allowing access through the proxy.
+      parameters:
+        - in: path
+          name: domain
+          required: true
+          schema:
+            type: string
+          description: The domain to be unblocked.
+      responses:
+        '200':
+          description: Domain successfully unblocked.
+        '404':
+          description: Domain not found.
+        '500':
+          description: Internal server error.
+
+  /admin/blocklist:
+    get:
+      summary: Get the current blocklist
+      description: Retrieves the list of blocked domains.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - reddit.com
+                  - facebook.com
+                  - twitter.com
+        '500':
+          description: Internal server error.
+
+  /user/blocklist:
+    get:
+      summary: Get the user's blocklist
+      description: Retrieves the list of blocked domains for the user.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - reddit.com
+                  - facebook.com
+                  - twitter.com
+        '500':
+          description: Internal server error.
+
+    post:
+      summary: Add a domain to the user's blocklist
+      description: Adds a domain to the user's blocklist, preventing access through the proxy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  example: reddit.com
+              required:
+                - domain
+      responses:
+        '200':
+          description: Domain successfully added to the blocklist.
+        '500':
+          description: Internal server error.
+
+    delete:
+      summary: Remove a domain from the user's blocklist
+      description: Removes a domain from the user's blocklist, allowing access through the proxy.
+      parameters:
+        - in: query
+          name: domain
+          required: true
+          schema:
+            type: string
+          description: The domain to be removed from the blocklist.
+      responses:
+        '200':
+          description: Domain successfully removed from the blocklist.
+        '404':
+          description: Domain not found in the blocklist.
+        '500':
+          description: Internal server error.
