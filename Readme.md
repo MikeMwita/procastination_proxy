@@ -29,28 +29,29 @@ client := &http.Client{
 }
 resp, err := client.Get("some URL")
 
-
+```
 
 **Allowing Everything**
 Instead of responding with a 403 status code, modify the proxy to make the request and return the response to the user.
 
-Static Blocklist
+**Static Blocklist**
 Enhance the proxy to block requests only if they match a global, static blocklist, allowing all other requests.
 
-Configurable Blocklist
+**Configurable Blocklist**
 Allow the proxy server administrator to configure the blocklist when starting the server. This can be achieved by passing the blocklist as a parameter during server startup.
 
-Dynamic Blocklist
+**Dynamic Blocklist**
 Implement a special 'admin' endpoint in the proxy server to enable administrators to connect via HTTP and block or unblock specific domains. Admins can make requests like:
 
 /admin/block/reddit.com
+
 /admin/unblock/facebook.com
+
 Ensure the blocklist is concurrency-safe to avoid data races during simultaneous updates.
 Office Hours
 Add an 'office hours' feature that enforces the blocklist only during specific hours of the day. The exact times should be configurable by the administrator when starting the server.
 
-Productization
-To make this project a shipping product, you need to add several components:
+**Todo**:
 
 TLS and WebSocket Support: Secure the proxy with TLS for encrypted communication and support WebSocket connections.
 Error Handling: Handle and log errors gracefully to enhance stability.
