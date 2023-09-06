@@ -1,21 +1,9 @@
 package handlers
 
-import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"net/http"
-)
+import "github.com/gin-gonic/gin"
 
 // Block a domain
 
-func (h Handler) PostAdminBlockDomain(c *gin.Context) {
-	domain := c.Param("domain")
-	err != h.ProxyService.BlockDomain(domain)
-	if err != nil {
+func (h *Handler) PostAdminBlockDomain(c *gin.Context) {
 
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": fmt.Sprintf("Domain '%s' blocked successfully", domain),
-	})
 }
